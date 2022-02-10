@@ -3,7 +3,7 @@ import {initialState} from '../store/initialState';
 
 export const usersReducer = (state = initialState.users, action) => {
   switch (action.type) {
-    case Actions.SiGN_IN:
+    case Actions.SIGN_IN:
       return {
         ...state,
         //重複分は後から書いたpayloadに上書きされる
