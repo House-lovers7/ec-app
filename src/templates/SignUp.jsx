@@ -1,7 +1,12 @@
 import React, {useCallback, useState} from "react";
-import TextInput from "../components/Uikit/TextInput";
+import TextInput from "../components/UIkit/TextInput";
+import PrimaryButton from "../components/UIkit/PrimaryButton";
+import {signUp } from "../reducks/users/operations";
+import { useDispatch } from "react-redux";
+
 
 const SignUp = () => {
+  const dispatch = useDispatch();
 
   const
   [username, setUsername] = useState(""),
@@ -27,10 +32,8 @@ const SignUp = () => {
 
 return (
 <div className="c-section-container">
-  <h2 className="u-text__headline u-text-center">
-  アカウント登録
-  </h2>
-    <div className="module-spacer--medium" >
+  <h2 className="u-text__headline u-text-center">アカウント登録</h2>
+    <div className="module-spacer--medium" />
       <TextInput
        fullWidth={true} label={"ユーザー名"} multiline={false} required={true}
        rows={1} value={username} type={"text"} onChange={inputUsername}
@@ -46,6 +49,12 @@ return (
          <TextInput
        fullWidth={true} label={"パスワード(再確認)"} multiline={false} required={true}
        rows={1} value={confirmPassword} type={"password"} onChange={inputConfirmPassword}
+      />
+     <div className="module-spacer--medium" />
+    <div className="center">
+      <PrimaryButton
+      label={"アカウントを登録する"}
+      onClick={() => dispatch(signUp(username, email, password, confirmPassword))}
       />
     </div>
 </div>
