@@ -9,6 +9,10 @@ export const usersReducer = (state = initialState.users, action) => {
         //重複分は後から書いたpayloadに上書きされる
         ...action.payload,
       }
+      case Actions.SIGN_OUT:
+        return {
+          ...action.payload
+        };
       default:
         return state
   }
