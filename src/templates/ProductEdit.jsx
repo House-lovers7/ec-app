@@ -10,11 +10,11 @@ import { useDispatch } from "react-redux";
 import { db } from "../firebase";
 
 const ProductEdit = () => {
+  const dispatch = useDispatch();
   let id = window.location.pathname.split('/product/edit')[1];
   if (id !== "") {
     id = id.split('/')[1]
   }
-  const dispatch = useDispatch();
 
   const [name, setName] = useState(""),
         [description, setDescription] = useState(""),

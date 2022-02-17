@@ -23,7 +23,6 @@ export const saveProduct = (id, name, description, category, gender,price, image
 const timestamp = FirebaseTimestamp.now()
 
 const data = {
-
   category: category,
   description: description,
   gender: gender,
@@ -34,9 +33,9 @@ const data = {
   sizes: sizes,
 }
 
-if ( id !== "") {
+if ( id === "") {
   const ref = ProductsRef.doc();
-  const id = ref.id
+  id = ref.id
   data.id = id
   data.created_at = timestamp
 }
