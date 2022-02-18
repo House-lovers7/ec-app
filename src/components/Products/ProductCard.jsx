@@ -13,7 +13,7 @@ import IconButton from "@material-ui/core/IconButton";
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
-// import {deleteProduct} from "../../reducks/products/operations";
+import {deleteProduct} from "../../reducks/products/operations";
 
 
 
@@ -75,12 +75,13 @@ const ProductCard = (props) => {
   const price = props.price.toLocaleString();
 
   const handleClick = (event) => {
-    setAnchorEl(event.currentTarget)
-  }
+    setAnchorEl(event.currentTarget);
+};
 
-  const handelClose = (event) => {
-    setAnchorEl(null)
-  }
+  const handleClose = () => {
+    setAnchorEl(null);
+};
+
 
   return (
     <Card className={classes.root}>
@@ -107,20 +108,25 @@ const ProductCard = (props) => {
             anchorEl={anchorEl}
             keepMounted
             open={Boolean(anchorEl)}
-            onClose={handelClose}
+            onClose={handleClose}
             >
             <MenuItem
             onClick={ () => {
               dispatch(push('/product/edit/' + props.id))
-              handelClose()
+              handleClose()
             }}
-            />
+            >
             編集する
-            <MenuItem />
+            </MenuItem>
+
             <MenuItem
-            />
-            削除する
-            <MenuItem />
+            onClick={() => {
+                dispatch(deleteProduct(props.id))
+                handleClose()
+            }}
+            >
+                削除する
+                </MenuItem>
 
             </Menu>
 

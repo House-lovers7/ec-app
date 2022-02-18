@@ -44,12 +44,14 @@ const SetSizesArea = (props) => {
             // Required input is blank
             return false
         } else {
+            console.log(index);
             if (index === props.sizes.length) {
                 props.setSizes(prevState => [...prevState, {size: size, quantity: quantity}]);
                 setIndex(index + 1);
                 setSize("");
                 setQuantity(0)
             } else {
+                console.log(index);
                 const newSizes = props.sizes;
                 newSizes[index] = {size: size, quantity: quantity};
                 props.setSizes(newSizes);
@@ -75,6 +77,10 @@ const SetSizesArea = (props) => {
         setIndex(props.sizes.length)
     },[props.sizes.length])
 
+// const memoIndex = useMemo( () => {
+//     setIndex(props.sizes.length)
+// },[props.sizes.length]);
+
     return (
         <div aria-label="サイズ展開">
             <TableContainer component={Paper}>
@@ -89,17 +95,17 @@ const SetSizesArea = (props) => {
                     </TableHead>
                     <TableBody>
                         {props.sizes.length > 0 && (
-                            props.sizes.map((item, index) => (
+                            props.sizes.map((item, i) => (
                                 <TableRow key={item.size}>
                                     <TableCell component="th" scope="row">{item.size}</TableCell>
                                     <TableCell>{item.quantity}</TableCell>
                                     <TableCell className={classes.iconCell}>
-                                        <IconButton className={classes.iconCell} onClick={() => editSize(index, item.size, item.quantity)}>
+                                        <IconButton className={classes.iconCell} onClick={() => editSize(i, item.size, item.quantity)}>
                                             <EditIcon />
                                         </IconButton>
                                     </TableCell>
                                     <TableCell className={classes.iconCell}>
-                                        <IconButton className={classes.iconCell} onClick={() => deleteSize(index)}>
+                                        <IconButton className={classes.iconCell} onClick={() => deleteSize(i)}>
                                             <DeleteIcon />
                                         </IconButton>
                                     </TableCell>

@@ -3,7 +3,7 @@ import React, {useCallback, useEffect, useState} from "react";
 import PrimaryButton from "../components/UIkit/PrimaryButton";
 import SelectBox from "../components/UIkit/SelectBox";
 import TextInput from "../components/UIkit/TextInput";
-import SetSizeArea from "../components/Products/SetSizeArea";
+import SetSizesArea from "../components/Products/SetSizesArea";
 import { saveProduct } from "../reducks/products/operations";
 import ImageArea from "../components/Products/ImageArea";
 import { useDispatch } from "react-redux";
@@ -36,6 +36,7 @@ const ProductEdit = () => {
             setPrice(event.target.value)
           },[setPrice])
 
+
           const categories = [
             {id: "tops", name: "トップス"},
             {id: "shirts", name: "シャツ"},
@@ -59,46 +60,45 @@ const ProductEdit = () => {
                 setCategory(data.category)
                 setGender(data.gender)
                 setPrice(data.price)
-
+                setSizes(data.sizes)
                 })
               }
               },[id])
 
   return(
     <section>
-      <h2 className="u-text__headline u-text-center">商品の登録と編集</h2>
-      <div className="c-section-container">
-      <ImageArea images={images} setImages={setImages}/>
+    <h2 className="u-text__headline u-text-center">商品の登録・編集</h2>
+    <div className="c-section-container">
+        <ImageArea images={images} setImages={setImages} />
         <TextInput
-        fullWidth={true} label={"商品名"} multiline={false} required={true}
-        onChange={inputName} rows={1} value={name} type={"text"}
+            fullWidth={true} label={"商品名"} multiline={false} required={true}
+            onChange={inputName} rows={1} value={name} type={"text"}
         />
-           <TextInput
-        fullWidth={true} label={"商品説明"} multiline={true} required={true}
-        onChange={inputDescription} rows={5} value={description} type={"text"}
-        />
-        <SelectBox
-        label={"カテゴリー"} required={true} options={categories} select={setCategory} onChange={true} value={category}
+        <TextInput
+            fullWidth={true} label={"商品説明"} multiline={true} required={true}
+            onChange={inputDescription} rows={5} value={description} type={"text"}
         />
         <SelectBox
-        label={"性別"} required={true} options={genders} select={setGender} onChange={true} value={gender}
+            label={"カテゴリー"} options={categories} required={true} select={setCategory} value={category}
         />
-           <TextInput
-        fullWidth={true} label={"価格"} multiline={false} required={true}
-        onChange={inputPrice} rows={1} value={price} type={"number"}
+        <SelectBox
+            label={"性別"} options={genders} required={true} select={setGender} value={gender}
         />
+        <TextInput
+            fullWidth={true} label={"価格"} multiline={false} required={true}
+            onChange={inputPrice} rows={1} value={price} type={"number"}
+        />
+        <div className="module-spacer--small"/>
+        <SetSizesArea sizes={sizes} setSizes={setSizes} />
         <div className="module-spacer--small" />
-        <SetSizeArea sizes={sizes} setSizes={setSizes} />
-        <div className="module-spacer--small" />
-        <div className="center"></div>
-        <PrimaryButton
-        label={"商品情報を保存"}
-        onClick={ () => dispatch(saveProduct(id, name, description, category, gender, price, images, sizes))}
-        />
-
-      </div>
-    </section>
-
+        <div className="center">
+            <PrimaryButton
+                label={"商品情報を保存"}
+                onClick={() => dispatch(saveProduct(id, name, description, category, gender, price, images, sizes))}
+            />
+        </div>
+    </div>
+</section>
   )
 }
 
