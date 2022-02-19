@@ -6,7 +6,8 @@ service cloud.firestore {
       allow create;
       allow update: if request.auth.id == userId;
       allow delete: if request.auth.id == userId;
-    }
+        }
+
       match /products/{productId} {
         allow read: if request.auth.uid != null;
         allow write: if request.auth.uid != null;

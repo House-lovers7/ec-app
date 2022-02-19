@@ -1,11 +1,11 @@
 
-import React, {useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import {ImageSwiper} from "../components/Products";
 import {makeStyles} from "@material-ui/styles";
 import {useDispatch, useSelector} from "react-redux";
-import {db} from "../firebase";
+import {db, FirebaseTimestamp} from "../firebase";
 import {SizeTable} from "../components/Products";
-// import {addProductToCart} from "../reducks/users/operations";
+import {addProductToCart} from "../reducks/users/operations";
 // import {returnCodeToBr} from "../function/common";
 
 const useStyles = makeStyles((theme) => ({
@@ -47,6 +47,21 @@ const ProductDetail = () => {
     const id = path.split('/product/')[1]
 
     const [product, setProduct] = useState(null);
+    const addProduct = useCallback((selectedSize) => {
+        const timestamp = FirebaseTimestamp.now();
+        dispatch(addProductToCart({
+            added_at: timestamp,
+            description: product.description,
+            gender: product.gender,
+            images: product.images,
+            name: product.name,
+            price: product.price,
+            productId: product.id,
+            quantity: 1,
+            size: selectedSize
+        }))
+      }, [product])
+
 
     useEffect(() => {
         db.collection('products').doc(id).get().then(doc => {
@@ -66,7 +81,7 @@ const ProductDetail = () => {
                       <h2 className="u-text__headline">{product.name}</h2>
                       <p className={classes.price}>¥{(product.price).toLocaleString()}</p>
                       <div className="module-spacer--small"/>
-                      <SizeTable sizes={product.sizes} />
+                      <SizeTable addProduct={addProduct} sizes={product.sizes} />
                       <div className="module-spacer--small"/>
                       {/* <p>{returnCodeToBr(product.description)}</p> */}
                   </div>

@@ -1,7 +1,22 @@
-import {signInAction, signOutAction} from "./actions";
+import {signInAction, signOutAction, fetchProductsInCartAction} from "./actions";
 import {push} from 'connected-react-router';
 import {auth,db,FirebaseTimestamp} from '../../firebase/index'
-import identity from "redux-actions/lib/utils/identity";
+
+export const addProductToCart = (addedProduct) =>  {
+  return async(dispatch, getState) => {
+    const userId = getState().users.uid;
+    const cartRef = db.collection('users').doc(userId).collection('cart').doc();
+    addedProduct['cartId'] = cartRef.id
+    await cartRef.set(addedProduct);
+    dispatch(push('/'))
+  }
+};
+
+export const fetchProductsInCart = (products) => {
+  return async (dispatch) => {
+    dispatch(fetchProductsInCartAction(products))
+  }
+}
 
 export const ListenAuthState = () => {
   return async (dispatch) => {
