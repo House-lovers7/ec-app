@@ -2,6 +2,8 @@ import {signInAction, signOutAction, fetchProductsInCartAction} from "./actions"
 import {push} from 'connected-react-router';
 import {auth,db,FirebaseTimestamp} from '../../firebase/index'
 
+// const usersRef = db.collection('users')
+
 export const addProductToCart = (addedProduct) =>  {
   return async(dispatch, getState) => {
     const userId = getState().users.uid;
@@ -11,6 +13,16 @@ export const addProductToCart = (addedProduct) =>  {
     dispatch(push('/'))
   }
 };
+
+// export const addProductToCart = (addedProduct) => {
+//   return async (dispatch, getState) => {
+//       const uid = getState().users.uid;
+//       const cartRef = usersRef.doc(uid).collection('cart').doc();
+//       addedProduct['cartId'] = cartRef.id;
+//       await cartRef.set(addedProduct);
+//       dispatch(push('/'))
+//   }
+// }
 
 export const fetchProductsInCart = (products) => {
   return async (dispatch) => {
