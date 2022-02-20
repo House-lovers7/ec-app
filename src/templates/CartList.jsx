@@ -25,7 +25,7 @@ const CartList = () => {
   const productsInCart = getProductsInCart(selector);
 
  const goToOrder = useCallback( () => {
-   dispatch(push('/order'))
+   dispatch(push('/order/confirm'))
    },
    []);
 
