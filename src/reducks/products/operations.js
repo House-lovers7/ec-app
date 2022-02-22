@@ -16,19 +16,22 @@ export const deleteProduct = (id) => {
   }
 }
 
-export const fetchProducts = () => {
-return async(dispatch) => {
-  productsRef.orderBy('updated_at', 'desc').get()
-  .then(snapshots => {
-    const productList = []
-    snapshots.forEach( snapshot => {
-      const product = snapshot.data();
-      productList.push(product)
-    })
+export const fetchProducts = (gender, category) => {
+  return async (dispatch) => {
+    let query = productsRef.orderBy('updated_at', 'desc');
+    query = (gender !== "") ? query.where('gender', '==', gender) : query;
+    query = (category !== "") ? query.where('category', '==', category) : query;
 
-    dispatch(fetchProductsAction(productList))
-  })
-}
+    query.get()
+      .then(snapshots => {
+        const productList = []
+        snapshots.forEach(snapshot => {
+          const product = snapshot.data()
+          productList.push(product)
+        })
+        dispatch(fetchProductsAction(productList))
+      })
+  }
 }
 
 export const orderProduct = (productsInCart, price) => {

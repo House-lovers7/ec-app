@@ -16,11 +16,18 @@ const ProductEdit = () => {
     id = id.split('/')[1]
   }
 
+  const genders = [
+    {id: "all", name: "すべて"},
+    {id: "male", name: "男性"},
+    {id: "female", name: "女性"},
+  ];
+
   const [name, setName] = useState(""),
         [description, setDescription] = useState(""),
         [images, setImages] = useState([]),
         [price, setPrice] = useState(""),
-        [category, setCategory] = useState(""),
+        [category, setCategory] = useState([]),
+        [categories, setCategories] = useState(""),
         [gender, setGender] = useState(""),
         [sizes, setSizes] = useState([]);
 
@@ -36,18 +43,6 @@ const ProductEdit = () => {
             setPrice(event.target.value)
           },[setPrice])
 
-
-          const categories = [
-            {id: "tops", name: "トップス"},
-            {id: "shirts", name: "シャツ"},
-            {id: "pants", name: "パンツ"},
-          ];
-
-          const genders = [
-            {id: "all", name: "すべて"},
-            {id: "male", name: "男性"},
-            {id: "female", name: "女性"},
-          ];
 
           useEffect( () => {
             if (id !== "") {
@@ -65,6 +60,22 @@ const ProductEdit = () => {
               }
               },[id])
 
+              useEffect( () => {
+                db.collection('categories')
+                .orderBy('order', 'asc')
+                .get()
+                .then(snapshots => {
+                  const list = []
+                  snapshots.forEach( snapshot => {
+                    const data = snapshot.data()
+                    list.push({
+                      id: data.id,
+                      name: data.name
+                    })
+                  })
+                  setCategories(list)
+                })
+              },[]);
   return(
     <section>
     <h2 className="u-text__headline u-text-center">商品の登録・編集</h2>
