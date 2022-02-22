@@ -10,22 +10,27 @@ import { createLogger } from 'redux-logger';
 import {ProductsReducer} from '../products/reducers';
 import {UsersReducer} from '../users/reducers';
 
-export default function createstore(history) {
+// createStoreの再定義 - historyを引数で受け、connected-react-routerの利用を抽象化
+export default function createStore(history) {
 
-  const logger = createLogger({
-    collapsed: true,
-    diff: true,
-  })
-return reduxCreateStore(
-  combineReducers({
-    router: connectRouter(history),
-    users: UsersReducer,
-    products: ProductsReducer
-  }),
-  applyMiddleware(
-    routerMiddleware(history),
-    thunk,
-    logger
-)
-)
+  // Define individual settings of redux-logger
+  let middleWares = [routerMiddleware(history), thunk];
+  if (process.env.NODE_ENV === 'development') {
+      const logger = createLogger({
+          collapsed: true,
+          diff: true
+      });
+      middleWares.push(logger)
+  }
+
+  return reduxCreateStore( // オリジナル createStore の別名
+      combineReducers({
+          products: ProductsReducer,
+          router: connectRouter(history),
+          users: UsersReducer,
+      }),
+      applyMiddleware(
+          ...middleWares
+      )
+  );
 }
