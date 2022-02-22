@@ -26,8 +26,8 @@ const ProductEdit = () => {
         [description, setDescription] = useState(""),
         [images, setImages] = useState([]),
         [price, setPrice] = useState(""),
-        [category, setCategory] = useState([]),
-        [categories, setCategories] = useState(""),
+        [category, setCategory] = useState(""),
+        [categories, setCategories] = useState([]),
         [gender, setGender] = useState(""),
         [sizes, setSizes] = useState([]);
 
