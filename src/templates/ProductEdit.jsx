@@ -37,7 +37,7 @@ const ProductEdit = () => {
 
           const inputDescription = useCallback((event) => {
             setDescription(event.target.value)
-          },[setDescription]);
+          },[setDescription])
 
           const inputPrice = useCallback((event) => {
             setPrice(event.target.value)

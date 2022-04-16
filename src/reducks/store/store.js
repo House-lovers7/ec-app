@@ -32,5 +32,5 @@ export default function createStore(history) {
       applyMiddleware(
           ...middleWares
       )
-  );
+  )
 }

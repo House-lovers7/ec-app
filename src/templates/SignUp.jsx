@@ -7,7 +7,7 @@ import { push } from "connected-react-router";
 
 
 const SignUp = () => {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch()
 
   const
   [username, setUsername] = useState(""),

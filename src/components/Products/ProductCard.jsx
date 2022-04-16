@@ -71,8 +71,10 @@ const ProductCard = (props) => {
   const dispatch = useDispatch();
   const [anchorEl, setAnchorEl] = useState(null);
 
+
   const images = (props.images.length > 0) ? props.images : [NoImage]
   const price = props.price.toLocaleString();
+  console.log(images[0].path)
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
